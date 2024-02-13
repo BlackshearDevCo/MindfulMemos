@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import SearchIcon from "@/components/icons/SearchIcon";
+import CheckCircleIcon from "@/components/icons/CheckCircleIcon";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +20,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="h-screen flex flex-col">
+          <header className="flex h-14 items-center border-b px-4">
+            <Link className="flex items-center gap-2 font-semibold" href="#">
+              <CheckCircleIcon />
+              <span className="">MindfulMemos</span>
+            </Link>
+            <Button className="ml-auto h-8 w-8" size="icon" variant="ghost">
+              <SearchIcon />
+              <span className="sr-only">Toggle search</span>
+            </Button>
+          </header>
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

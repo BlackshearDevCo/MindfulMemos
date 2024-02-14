@@ -15,7 +15,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "MindfulMemos",
   description:
-    "A place to keep all of your access thoughts and tasks so they don't cloud up your mind.",
+    "A place to keep all of your excess thoughts and tasks so they don't cloud up your mind.",
 };
 
 export default function RootLayout({

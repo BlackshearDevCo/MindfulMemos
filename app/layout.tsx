@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import "./globals.css";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
-import SearchIcon from "@/components/icons/SearchIcon";
 import CheckCircleIcon from "@/components/icons/CheckCircleIcon";
+import { getLogoutRoute, getTodosRoute } from "@/lib/routes";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "800"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,23 +24,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="h-screen flex flex-col">
-          <header className="flex h-14 items-center border-b px-4">
-            <Link className="flex items-center gap-2 font-semibold" href="#">
-              <CheckCircleIcon />
-              <span className="">MindfulMemos</span>
-            </Link>
-            <Button className="ml-auto h-8 w-8" size="icon" variant="ghost">
-              <SearchIcon />
-              <span className="sr-only">Toggle search</span>
-            </Button>
-          </header>
-          {children}
-        </div>
-      </body>
+      <UserProvider>
+        <body className={poppins.className}>
+          <div className="h-screen flex flex-col">
+            <header className="flex h-14 items-center border-b px-4">
+              <Link
+                className="flex items-center gap-2 font-semibold"
+                href={getTodosRoute()}
+              >
+                <CheckCircleIcon />
+                <span className="">MindfulMemos</span>
+              </Link>
+              <a href={getLogoutRoute()} className="block ml-auto">
+                Logout
+              </a>
+            </header>
 
-      <SpeedInsights />
+            {children}
+          </div>
+          <SpeedInsights />
+        </body>
+      </UserProvider>
     </html>
   );
 }

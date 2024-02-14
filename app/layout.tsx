@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
-import "./globals.css";
 import Link from "next/link";
 import CheckCircleIcon from "@/components/icons/CheckCircleIcon";
 import { getLogoutRoute, getTodosRoute } from "@/lib/routes";
+import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],

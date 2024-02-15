@@ -1,18 +1,18 @@
 import { Todo } from "@/lib/types";
+import { createClient } from "@/lib/supabase";
 import React from "react";
+import { getSession } from "@auth0/nextjs-auth0";
 
-const DUMMY_TODOS: Todo[] = [
-  { id: "1", title: "Todo 1" },
-  { id: "2", title: "Todo 2" },
-  { id: "3", title: "Todo 3" },
-  { id: "4", title: "Todo 4" },
-  { id: "5", title: "Todo 5" },
-];
+export default async function TodosPage() {
+  const session = await getSession();
+  const supabase = createClient(session?.user?.accessToken || "");
+  let { data: todos } = await supabase.from("todos").select("*");
 
-export default function TodosPage() {
+  console.log(todos);
+
   return (
     <div className="grid gap-4 pt-4">
-      {DUMMY_TODOS.map((todo) => (
+      {(todos || []).map((todo) => (
         <TodoItem key={todo.id} todo={todo} />
       ))}
     </div>

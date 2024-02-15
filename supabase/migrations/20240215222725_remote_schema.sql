@@ -18,6 +18,10 @@ SET default_tablespace = '';
 
 SET default_table_access_method = "heap";
 
+create or replace function auth.user_id() returns text as $$
+  select nullif(current_setting('request.jwt.claims', true)::json->>'userId', '')::text;
+$$ language sql stable;
+
 CREATE TABLE IF NOT EXISTS "public"."memos" (
     "id" bigint NOT NULL,
     "created_at" timestamp with time zone DEFAULT now() NOT NULL,

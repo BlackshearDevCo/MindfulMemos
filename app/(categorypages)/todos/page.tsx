@@ -8,8 +8,6 @@ export default async function TodosPage() {
   const supabase = createClient(session?.user?.accessToken || "");
   let { data: todos } = await supabase.from("todos").select("*");
 
-  console.log(todos);
-
   return (
     <div className="grid gap-4 pt-4">
       {(todos || []).map((todo) => (

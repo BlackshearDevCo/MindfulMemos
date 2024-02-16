@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import CheckCircleIcon from "@/components/icons/CheckCircleIcon";
 import { getLogoutRoute, getTodosRoute } from "@/lib/routes";
 import "./globals.css";
+import Logo from "@/components/icons/Logo";
+import ThemeManager from "@/components/ThemeManager";
 
-const poppins = Poppins({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "800"],
 });
@@ -26,15 +28,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <body className={poppins.className}>
+        <body className={`${dmSans.className} bg-background text-text`}>
           <div className="h-screen flex flex-col">
             <header className="flex h-14 items-center border-b px-4">
               <Link
                 className="flex items-center gap-2 font-semibold"
                 href={getTodosRoute()}
               >
-                <CheckCircleIcon />
-                <span className="">MindfulMemos</span>
+                <Logo />
+                <span className="">mindfulmemos</span>
               </Link>
               <a href={getLogoutRoute()} className="block ml-auto">
                 Logout
@@ -43,6 +45,7 @@ export default function RootLayout({
 
             {children}
           </div>
+          <ThemeManager />
           <SpeedInsights />
         </body>
       </UserProvider>

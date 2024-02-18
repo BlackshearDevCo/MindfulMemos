@@ -1,3 +1,5 @@
+"use server";
+
 import {
   getSession,
   updateSession,
@@ -22,6 +24,7 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
   };
 
   const secret = process.env.SUPABASE_JWT_SECRET;
+
   if (!secret) throw new Error("Missing JWT Secret");
   const encodedSecret = new TextEncoder().encode(secret);
   const jwt = await new SignJWT(payload)
@@ -30,10 +33,24 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
     .setExpirationTime("1h")
     .sign(encodedSecret);
 
-  await updateSession(req, res, {
+  const updatedSession = {
     ...session,
     user: { ...session.user, accessToken: jwt },
-  });
+  };
+
+  await updateSession(req, res, updatedSession);
 
   return res;
 });
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    "/((?!_next/static|_next/image|favicon.ico).*)",
+  ],
+};

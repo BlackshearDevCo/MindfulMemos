@@ -3,7 +3,6 @@ import { DM_Sans } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
-import CheckCircleIcon from "@/components/icons/CheckCircleIcon";
 import { getLogoutRoute, getTodosRoute } from "@/lib/routes";
 import "./globals.css";
 import Logo from "@/components/icons/Logo";
@@ -26,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <UserProvider>
+    <UserProvider>
+      <html lang="en">
         <body className={`${dmSans.className} bg-background text-text`}>
           <div className="h-screen flex flex-col">
             <header className="flex h-14 items-center border-b px-4">
@@ -43,12 +42,12 @@ export default function RootLayout({
               </a>
             </header>
 
-            {children}
+            <div className="flex flex-1 p-4">{children}</div>
           </div>
           <ThemeManager />
           <SpeedInsights />
         </body>
-      </UserProvider>
-    </html>
+      </html>
+    </UserProvider>
   );
 }

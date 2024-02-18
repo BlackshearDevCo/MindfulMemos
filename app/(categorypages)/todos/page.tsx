@@ -1,12 +1,13 @@
 import { Todo } from "@/lib/types";
 import { createClient } from "@/lib/supabase";
 import React from "react";
-import { getSession } from "@auth0/nextjs-auth0";
+import { getAccessToken, getSession } from "@auth0/nextjs-auth0";
 
 export default async function TodosPage() {
   const session = await getSession();
   const supabase = createClient(session?.user?.accessToken || "");
-  let { data: todos } = await supabase.from("todos").select("*");
+  let { data: todos, error } = await supabase.from("todos").select("*");
+  console.log({ todos, error });
 
   return (
     <div className="grid gap-4 pt-4">

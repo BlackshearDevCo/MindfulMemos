@@ -1,6 +1,6 @@
 // TODO (lol): Update with DB structure
 export type Todo = {
-  id: string;
+  id: number;
   created_at: string;
   title: string;
   description?: string;
@@ -13,7 +13,7 @@ export type Todo = {
 
 // TODO: Update with DB structure
 export type Category = {
-  id: string;
+  id: number;
   created_at: string;
   name: string;
   order: number;

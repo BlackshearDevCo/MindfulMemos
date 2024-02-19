@@ -18,18 +18,46 @@
     --secondary: #214c8f;
     --accent: #3d7ddf;
   } */
-  :root {
-    --text: #031a10;
-    --background: #f2fef8;
-    --primary: #2deb8e;
-    --secondary: #7cdef2;
-    --accent: #4aafee;
+  /* :root {
+    --text: #12150f;
+    --background: #f6f9f3;
+    --primary: #8dbd4a;
+    --secondary: #bee28a;
+    --accent: #afe85e;
   }
   .dark {
-    --text: #e4fcf1;
-    --background: #010e08;
-    --primary: #14d276;
-    --secondary: #0d6e82;
-    --accent: #1177b6;
+    --text: #edf0ea;
+    --background: #0a0e07;
+    --primary: #84b441;
+    --secondary: #51761e;
+    --accent: #67a117;
+  } */
+  /* :root {
+    --text: #081713;
+    --background: #f8fcfa;
+    --primary: #4ec6a2;
+    --secondary: #b893dc;
+    --accent: #d171c7;
+  }
+  .dark {
+    --text: #e8f7f3;
+    --background: #030806;
+    --primary: #39b18d;
+    --secondary: #47236c;
+    --accent: #8e2e85;
+  } */
+  :root {
+    --text: #031b24;
+    --background: #fafdff;
+    --primary: #16b9ee;
+    --secondary: #e481f6;
+    --accent: #f24cbe;
+  }
+  .dark {
+    --text: #d9f3fc;
+    --background: #000305;
+    --primary: #11b3e8;
+    --secondary: #6b097c;
+    --accent: #b40e7f;
   }
 }

@@ -2,17 +2,16 @@
 
 import React from "react";
 import Link from "next/link";
-import { getNewMemoRoute, getThoughtsRoute, getTodosRoute } from "@/lib/routes";
+import { getThoughtsRoute, getTodosRoute } from "@/lib/routes";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import PlusIcon from "@/components/icons/PlusIcon";
 
 type Props = {
   children: React.ReactNode;
-  modal: React.ReactNode;
 };
 
-export default function PagesLayout({ children, modal }: Props) {
+export default function PagesLayout({ children }: Props) {
   const pathname = usePathname();
 
   const todosRoute = getTodosRoute();
@@ -25,22 +24,18 @@ export default function PagesLayout({ children, modal }: Props) {
         <Tab href={thoughtsRoute}>Thoughts</Tab>
         <div
           className={clsx(
-            "w-1/2 h-full bg-black/25 rounded-lg px-2 py-1.5",
+            "w-1/2 h-full bg-primary rounded-lg px-2 py-1.5",
             "absolute left-0 top-0 -z-10 transition-transform",
             pathname === thoughtsRoute ? "translate-x-full" : ""
           )}
         />
       </nav>
 
-      <div>{modal}</div>
-      <div>{children}</div>
+      {children}
 
-      <Link
-        href={getNewMemoRoute()}
-        className="w-16 h-16 flex justify-center items-center bg-secondary border-2 border-accent rounded-full absolute bottom-4 right-4"
-      >
+      <button className="w-16 h-16 flex justify-center items-center bg-primary text-background rounded-full absolute bottom-4 right-4 shadow-lg">
         <PlusIcon />
-      </Link>
+      </button>
     </main>
   );
 }

@@ -29,7 +29,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${dmSans.className} bg-background text-text`}>
           <div className="h-screen flex flex-col">
-            <header className="flex h-14 items-center border-b px-4">
+            <header className="flex min-h-14 h-14 items-center border-b px-4">
               <Link
                 className="flex items-center gap-2 font-semibold"
                 href={getTodosRoute()}

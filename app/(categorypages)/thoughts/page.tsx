@@ -1,9 +1,38 @@
 import { getSession } from "@auth0/nextjs-auth0";
+import EmptyList from "../EmptyList";
+import Link from "next/link";
 
 export default async function ThoughtsPage() {
   const session = await getSession();
 
-  console.log(session?.user);
+  // return <EmptyList title="Embrace the quiet and enjoy the mental breather." />;
 
-  return <div>Thoughts</div>;
+  return (
+    <div className="grid grid-cols-thoughts gap-4 pt-4">
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+      <ThoughtPreview />
+    </div>
+  );
+}
+
+function ThoughtPreview() {
+  return (
+    <Link
+      href="/"
+      className="aspect-square border-2 border-secondary rounded-xl p-2 text-sm"
+    >
+      Lorem ipsum dolor sit amet, occaecat et velit voluptate culpa Lorem tempor
+      nisi.
+    </Link>
+  );
 }

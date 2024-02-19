@@ -6,10 +6,6 @@ export function getThoughtsRoute() {
   return "/thoughts";
 }
 
-export function getNewMemoRoute() {
-  return "/memo/new";
-}
-
 export function getLoginRoute() {
   return "/api/auth/login";
 }

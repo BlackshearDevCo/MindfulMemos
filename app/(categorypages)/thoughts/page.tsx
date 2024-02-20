@@ -1,10 +1,6 @@
-import { getSession } from "@auth0/nextjs-auth0";
-import EmptyList from "../EmptyList";
 import Link from "next/link";
 
 export default async function ThoughtsPage() {
-  const session = await getSession();
-
   // return <EmptyList title="Embrace the quiet and enjoy the mental breather." />;
 
   return (

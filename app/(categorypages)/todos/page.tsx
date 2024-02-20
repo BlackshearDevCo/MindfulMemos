@@ -1,11 +1,11 @@
 import { createClient } from "@/lib/supabase";
 import React from "react";
-import { getSession } from "@auth0/nextjs-auth0";
+import auth0 from "@/lib/auth0";
 import EmptyList from "@/app/(categorypages)/EmptyList";
 import TodoLists from "@/app/(categorypages)/todos/TodoLists";
 
 export default async function TodosPage() {
-  const session = await getSession();
+  const session = await auth0.getSession();
   const supabase = createClient(session?.user?.accessToken || "");
   let { data: todos } = await supabase
     .from("todos")

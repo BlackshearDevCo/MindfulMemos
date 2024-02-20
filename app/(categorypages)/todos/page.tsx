@@ -7,7 +7,7 @@ import TodoLists from "@/app/(categorypages)/todos/TodoLists";
 export default async function TodosPage() {
   const session = await getSession();
   const supabase = createClient(session?.user?.accessToken || "");
-  let { data: todos, error } = await supabase
+  let { data: todos } = await supabase
     .from("todos")
     .select("*, category:categories ( * )");
 

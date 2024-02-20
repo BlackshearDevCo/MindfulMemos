@@ -1,13 +1,13 @@
 "use server";
 
-import { getSession } from "@auth0/nextjs-auth0";
-import { createClient } from "./supabase";
+import auth0 from "@/lib/auth0";
+import { createClient } from "@/lib/supabase";
 
 export async function createTodo(
   categoryId: number | undefined,
   formData: FormData
 ) {
-  const session = await getSession();
+  const session = await auth0.getSession();
   const supabase = createClient(session?.user?.accessToken || "");
   const title = formData.get("title");
 

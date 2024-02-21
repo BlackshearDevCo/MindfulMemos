@@ -5,7 +5,6 @@ import Link from "next/link";
 import { getTasksRoute, getThoughtsRoute } from "@/lib/routes";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import { PlusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getUsersName } from "@/lib/utils";

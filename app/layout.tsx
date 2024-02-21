@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <UserProvider>
       <html lang="en">
-        <body className={`${dmSans.className} bg-background text-text`}>
+        <body className={`${dmSans.className} bg-background-50 text-text-950`}>
           <div className="h-screen flex flex-col">
             <header className="flex min-h-14 h-14 items-center border-b px-4">
               <Link

@@ -15,7 +15,7 @@ export default function Input({ name, label, ...props }: InputProps) {
         name={name}
         type="text"
         {...props}
-        className="bg-background border-2 border-accent px-3 py-1 rounded w-full"
+        className="bg-background-50 border-2 border-accent-500 px-3 py-1 rounded w-full"
       />
     </label>
   );

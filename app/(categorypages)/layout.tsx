@@ -24,7 +24,7 @@ export default function PagesLayout({ children }: Props) {
         <Tab href={thoughtsRoute}>Thoughts</Tab>
         <div
           className={clsx(
-            "w-1/2 h-full bg-primary rounded-lg px-2 py-1.5",
+            "w-1/2 h-full bg-primary-500 rounded-lg px-2 py-1.5",
             "absolute left-0 top-0 -z-10 transition-transform",
             pathname === thoughtsRoute ? "translate-x-full" : ""
           )}
@@ -33,7 +33,7 @@ export default function PagesLayout({ children }: Props) {
 
       {children}
 
-      <button className="w-16 h-16 flex justify-center items-center bg-primary text-background rounded-full absolute bottom-4 right-4 shadow-lg">
+      <button className="w-16 h-16 flex justify-center items-center bg-primary-500 text-background-50 rounded-full absolute bottom-4 right-4 shadow-lg">
         <PlusIcon />
       </button>
     </main>

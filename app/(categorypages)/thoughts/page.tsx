@@ -25,7 +25,7 @@ function ThoughtPreview() {
   return (
     <Link
       href="/"
-      className="aspect-square border-2 border-secondary rounded-xl p-2 text-sm"
+      className="aspect-square border-2 border-secondary-500 rounded-xl p-2 text-sm"
     >
       Lorem ipsum dolor sit amet, occaecat et velit voluptate culpa Lorem tempor
       nisi.

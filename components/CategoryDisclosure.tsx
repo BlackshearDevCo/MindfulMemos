@@ -20,7 +20,7 @@ export default function CategoryDisclosure({
   return (
     <div className="flex flex-col gap-1">
       <Disclosure defaultOpen>
-        <div className="w-full flex">
+        <div className="flex w-full">
           <Disclosure.Button className="flex-1 text-left">
             {name}
           </Disclosure.Button>

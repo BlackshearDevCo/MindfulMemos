@@ -1,5 +1,5 @@
-export function getTodosRoute() {
-  return "/todos";
+export function getTasksRoute() {
+  return "/tasks";
 }
 
 export function getThoughtsRoute() {

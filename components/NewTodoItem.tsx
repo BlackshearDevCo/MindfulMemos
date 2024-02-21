@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { TodoItemContainer } from "@/components/TodoItem";
-import Input from "./ui/Input";
+// import Input from "./ui/Input";
 import { createTodo } from "@/lib/actions";
 import { useFormStatus } from "react-dom";
 
@@ -46,14 +46,15 @@ function NewTodoInput() {
 
   return (
     <TodoItemContainer>
-      <Input
+      {""}
+      {/* <Input
         name="title"
         placeholder="New Todo"
         autoFocus
         required
         disabled={pending}
         aria-disabled={pending}
-      />
+      /> */}
     </TodoItemContainer>
   );
 }

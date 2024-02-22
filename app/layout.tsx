@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
-import Link from "next/link";
-import { getLogoutRoute, getTodosRoute } from "@/lib/routes";
-import "./globals.css";
-import Logo from "@/components/icons/Logo";
+// import { UserProvider } from "@auth0/nextjs-auth0/client";
 import ThemeManager from "@/components/ThemeManager";
+import Header from "@/components/Header";
+import "./globals.css";
+import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -21,33 +20,24 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  session,
 }: Readonly<{
   children: React.ReactNode;
+  session: Session;
 }>) {
   return (
-    <UserProvider>
+    <SessionProvider session={session}>
       <html lang="en">
         <body className={`${dmSans.className} bg-background-50 text-text-950`}>
-          <div className="h-screen flex flex-col">
-            <header className="flex min-h-14 h-14 items-center border-b px-4">
-              <Link
-                className="flex items-center gap-2 font-semibold"
-                href={getTodosRoute()}
-              >
-                <Logo />
-                <span className="">mindfulmemos</span>
-              </Link>
-              <a href={getLogoutRoute()} className="block ml-auto">
-                Logout
-              </a>
-            </header>
+          <div className="flex h-screen flex-col">
+            <Header />
 
-            <div className="flex flex-1 p-4">{children}</div>
+            <div className="mt-16 flex flex-1">{children}</div>
           </div>
+
           <ThemeManager />
-          <SpeedInsights />
         </body>
       </html>
-    </UserProvider>
+    </SessionProvider>
   );
 }

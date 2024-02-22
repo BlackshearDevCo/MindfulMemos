@@ -13,10 +13,10 @@ import {
 import React, { useState } from "react";
 import UserImage from "./ui/UserImage";
 import Link from "next/link";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { getUsersFullName } from "@/lib/utils";
+import { getUsersName } from "@/lib/utils";
 import { getLogoutRoute } from "@/lib/routes";
 import { Transition } from "@headlessui/react";
+import { useUser } from "@/lib/hooks";
 
 export default function HeaderSidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +39,7 @@ function Sidebar({
   closeSidebar: () => void;
   isOpen: boolean;
 }) {
-  const { user } = useUser();
+  const user = useUser();
 
   const sidebarClasses =
     "absolute left-0 top-0 z-50 flex h-screen w-[80vw] flex-col items-center rounded-r-xl bg-background-50 pb-16 pt-8 shadow-lg ring-1 ring-gray-900/5";
@@ -73,7 +73,7 @@ function Sidebar({
                 <UserImage />
               </div>
               <h2 className="mb-1 text-center text-2xl font-bold">
-                {getUsersFullName(user)}
+                {getUsersName(user)}
               </h2>
               <Link href="/" className="text-sm text-accent-500">
                 View account

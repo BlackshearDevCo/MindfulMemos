@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
+// import { UserProvider } from "@auth0/nextjs-auth0/client";
 import ThemeManager from "@/components/ThemeManager";
 import Header from "@/components/Header";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -18,11 +20,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  session,
 }: Readonly<{
   children: React.ReactNode;
+  session: Session;
 }>) {
   return (
-    <UserProvider>
+    <SessionProvider session={session}>
       <html lang="en">
         <body className={`${dmSans.className} bg-background-50 text-text-950`}>
           <div className="flex h-screen flex-col">
@@ -34,6 +38,6 @@ export default function RootLayout({
           <ThemeManager />
         </body>
       </html>
-    </UserProvider>
+    </SessionProvider>
   );
 }

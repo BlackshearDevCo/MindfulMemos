@@ -7,9 +7,9 @@ export function getThoughtsRoute() {
 }
 
 export function getLoginRoute() {
-  return "/api/auth/login";
+  return "/api/auth/signin";
 }
 
 export function getLogoutRoute() {
-  return "/api/auth/logout";
+  return "/api/auth/signout";
 }

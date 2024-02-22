@@ -5,10 +5,10 @@ import Link from "next/link";
 import { getTasksRoute, getThoughtsRoute } from "@/lib/routes";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { getUsersName } from "@/lib/utils";
 import Button from "@/components/ui/Button";
 import UserImage from "@/components/ui/UserImage";
+import { useUser } from "@/lib/hooks";
+import { getUsersName } from "@/lib/utils";
 
 const TASKS_PROMPT = "What do you want to accomplish?";
 const THOUGHTS_PROMPT = "What's on your mind today?";
@@ -19,7 +19,7 @@ type Props = {
 
 // TODO: Implement loading skeleton
 export default function PagesLayout({ children }: Props) {
-  const { user } = useUser();
+  const user = useUser();
   const pathname = usePathname();
   const tasksRoute = getTasksRoute();
   const thoughtsRoute = getThoughtsRoute();

@@ -5,10 +5,10 @@ import Link from "next/link";
 import { getTasksRoute, getThoughtsRoute } from "@/lib/routes";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getUsersName } from "@/lib/utils";
 import Button from "@/components/ui/Button";
+import UserImage from "@/components/ui/UserImage";
 
 const TASKS_PROMPT = "What do you want to accomplish?";
 const THOUGHTS_PROMPT = "What's on your mind today?";
@@ -29,17 +29,8 @@ export default function PagesLayout({ children }: Props) {
   return (
     <main className="relative flex flex-1 flex-col gap-4 p-8 pt-4">
       <section className="flex flex-col items-center">
-        <div className="mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-background-100">
-          {user?.picture ? (
-            <Image
-              src={user.picture}
-              alt="Profile Image"
-              width={64}
-              height={64}
-            />
-          ) : (
-            <span className="text-2xl font-bold">BB</span>
-          )}
+        <div className="mb-4">
+          <UserImage />
         </div>
 
         <h2 className="mb-1 text-2xl font-bold">Hey, {getUsersName(user)}!</h2>

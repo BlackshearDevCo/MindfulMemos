@@ -11,3 +11,9 @@ export function getUsersName(user?: UserProfile) {
     (user?.given_name as string) ?? user?.name ?? user?.nickname ?? user?.email
   );
 }
+
+export function getUsersFullName(user?: UserProfile) {
+  return (
+    user?.name ?? user?.nickname ?? (user?.given_name as string) ?? user?.email
+  );
+}

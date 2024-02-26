@@ -17,6 +17,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "@/app/(authpages)/signin/schema";
+import { getSignupRoute } from "@/lib/routes";
 
 export default function SignInPage() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,7 +56,12 @@ export default function SignInPage() {
             <FormItem className="w-full">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your email" type="email" {...field} />
+                <Input
+                  placeholder="Enter your email"
+                  type="email"
+                  required
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -72,6 +78,7 @@ export default function SignInPage() {
                 <Input
                   placeholder="Enter your password"
                   type="password"
+                  required
                   {...field}
                 />
               </FormControl>
@@ -93,6 +100,13 @@ export default function SignInPage() {
         <Button variant="default" type="submit" className="mt-10 w-full">
           Sign In
         </Button>
+
+        <p className="w-full text-center">
+          Don&apos;t have an account?{" "}
+          <Link href={getSignupRoute()} className="font-bold underline">
+            Sign up
+          </Link>
+        </p>
       </form>
     </Form>
   );

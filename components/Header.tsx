@@ -3,14 +3,11 @@ import Link from "next/link";
 import React from "react";
 import HeaderDropdown from "./HeaderDropdown";
 import HeaderSidebar from "./HeaderSidebar";
-import { createClient } from "@/lib/supabase/server";
 import clsx from "clsx";
+import { useUser } from "@/lib/hooks/server";
 
 export default async function Header() {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await useUser();
 
   const isAuthenticated = user?.role === "authenticated";
 

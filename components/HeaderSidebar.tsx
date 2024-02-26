@@ -16,6 +16,9 @@ import Link from "next/link";
 import { Transition } from "@headlessui/react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { getLoginRoute } from "@/lib/routes";
+import { getUsersFullName } from "@/lib/utils";
+import { useUser } from "@/lib/hooks/client";
 
 export default function HeaderSidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,6 +42,7 @@ function Sidebar({
   isOpen: boolean;
 }) {
   const router = useRouter();
+  const user = useUser();
   const sidebarClasses =
     "absolute left-0 top-0 z-50 flex h-screen w-[80vw] flex-col items-center rounded-r-xl bg-background-50 pb-16 pt-8 shadow-lg ring-1 ring-gray-900/5";
 
@@ -71,7 +75,7 @@ function Sidebar({
                 <UserImage />
               </div>
               <h2 className="mb-1 text-center text-2xl font-bold">
-                {/* {getUsersName(user)} */}User
+                {getUsersFullName(user)}
               </h2>
               <Link href="/" className="text-sm text-accent-500">
                 View account
@@ -117,6 +121,7 @@ function Sidebar({
                 onClick={async () => {
                   const supabase = createClient();
                   await supabase.auth.signOut();
+                  router.push(getLoginRoute());
                   router.refresh();
                 }}
               >

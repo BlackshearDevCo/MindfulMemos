@@ -7,6 +7,8 @@ import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import Button from "@/components/ui/OldButton";
 import UserImage from "@/components/ui/UserImage";
+import { getUsersFirstName } from "@/lib/utils";
+import { useUser } from "@/lib/hooks/client";
 
 const TASKS_PROMPT = "What do you want to accomplish?";
 const THOUGHTS_PROMPT = "What's on your mind today?";
@@ -20,6 +22,7 @@ export default function PagesLayout({ children }: Props) {
   const pathname = usePathname();
   const tasksRoute = getTasksRoute();
   const thoughtsRoute = getThoughtsRoute();
+  const user = useUser();
 
   const isTasksRoute = pathname === tasksRoute;
 
@@ -30,7 +33,9 @@ export default function PagesLayout({ children }: Props) {
           <UserImage />
         </div>
 
-        <h2 className="mb-1 text-2xl font-bold">Hey there!</h2>
+        <h2 className="mb-1 text-2xl font-bold">
+          Hey {getUsersFirstName(user)}!
+        </h2>
 
         <p className="text-sm">
           {isTasksRoute ? TASKS_PROMPT : THOUGHTS_PROMPT}

@@ -3,15 +3,15 @@
 import { useUser } from "@/lib/hooks/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import React from "react";
+import { getUsersInitials, getUsersProfileImage } from "@/lib/utils";
 
 export default function UserImage() {
-  // TODO: Update with user type when image property exists
-  const user: any = useUser();
+  const user = useUser();
 
   return (
     <Avatar>
-      <AvatarImage src={user?.image || ""} />
-      <AvatarFallback>MM</AvatarFallback>
+      <AvatarImage src={getUsersProfileImage(user) || ""} />
+      <AvatarFallback>{getUsersInitials(user)}</AvatarFallback>
     </Avatar>
   );
 }

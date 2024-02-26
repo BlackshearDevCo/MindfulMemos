@@ -18,6 +18,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "@/app/(authpages)/signup/schema";
 import { getLoginRoute } from "@/lib/routes";
+import FormWrapper from "@/components/FormWrapper";
 
 export default function SignUpPage() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,11 +45,7 @@ export default function SignUpPage() {
 
   return (
     <Form {...form}>
-      <form
-        action={handleSignUpWithErrors}
-        method="post"
-        className="flex flex-col items-start gap-3"
-      >
+      <FormWrapper action={handleSignUpWithErrors}>
         <FormField
           control={form.control}
           name="firstName"
@@ -133,7 +130,7 @@ export default function SignUpPage() {
             Login
           </Link>
         </p>
-      </form>
+      </FormWrapper>
     </Form>
   );
 }

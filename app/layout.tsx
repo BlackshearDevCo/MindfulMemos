@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.className} bg-background-50 text-text-950`}>
+      <body className={`${dmSans.className} text-foreground bg-background`}>
         <div className="flex h-screen flex-col">
           <Header />
 

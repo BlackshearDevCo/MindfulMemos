@@ -13,10 +13,9 @@ import {
 import React, { useState } from "react";
 import UserImage from "./ui/UserImage";
 import Link from "next/link";
-import { getUsersName } from "@/lib/utils";
-import { getLogoutRoute } from "@/lib/routes";
 import { Transition } from "@headlessui/react";
-import { useUser } from "@/lib/hooks";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function HeaderSidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,8 +38,7 @@ function Sidebar({
   closeSidebar: () => void;
   isOpen: boolean;
 }) {
-  const user = useUser();
-
+  const router = useRouter();
   const sidebarClasses =
     "absolute left-0 top-0 z-50 flex h-screen w-[80vw] flex-col items-center rounded-r-xl bg-background-50 pb-16 pt-8 shadow-lg ring-1 ring-gray-900/5";
 
@@ -73,7 +71,7 @@ function Sidebar({
                 <UserImage />
               </div>
               <h2 className="mb-1 text-center text-2xl font-bold">
-                {getUsersName(user)}
+                {/* {getUsersName(user)} */}User
               </h2>
               <Link href="/" className="text-sm text-accent-500">
                 View account
@@ -82,31 +80,31 @@ function Sidebar({
 
             <nav className="flex w-full flex-1 flex-col justify-between">
               <div className="flex flex-col items-start">
-                <NavItem href="/">
+                <NavItem type="link" href="/">
                   <IconWrapper>
                     <MagnifyingGlassIcon />
                   </IconWrapper>
                   <span>Search</span>
                 </NavItem>
-                <NavItem href="/">
+                <NavItem type="link" href="/">
                   <IconWrapper>
                     <ClipboardIcon />
                   </IconWrapper>
                   <span>Tasks</span>
                 </NavItem>
-                <NavItem href="/">
+                <NavItem type="link" href="/">
                   <IconWrapper>
                     <CloudIcon />
                   </IconWrapper>
                   <span>Thoughts</span>
                 </NavItem>
-                <NavItem href="/">
+                <NavItem type="link" href="/">
                   <IconWrapper>
                     <ListBulletIcon />
                   </IconWrapper>
                   <span>Categories</span>
                 </NavItem>
-                <NavItem asButton>
+                <NavItem type="button" onClick={() => {}}>
                   <IconWrapper>
                     <MoonIcon />
                   </IconWrapper>
@@ -114,7 +112,14 @@ function Sidebar({
                 </NavItem>
               </div>
 
-              <NavItem href={getLogoutRoute()}>
+              <NavItem
+                type="button"
+                onClick={async () => {
+                  const supabase = createClient();
+                  await supabase.auth.signOut();
+                  router.refresh();
+                }}
+              >
                 <IconWrapper>
                   <ArrowLeftStartOnRectangleIcon />
                 </IconWrapper>
@@ -134,7 +139,7 @@ function Sidebar({
         >
           <div
             onClick={closeSidebar}
-            className="bg-background-900/25 fixed left-0 top-0 z-40 h-screen w-screen"
+            className="fixed left-0 top-0 z-40 h-screen w-screen bg-background-900/25"
           />
         </Transition.Child>
       </div>
@@ -142,23 +147,39 @@ function Sidebar({
   );
 }
 
-type NavItemProps = {
-  href?: string;
+type ButtonNavItem = {
+  type: "button";
+  onClick: () => void;
   children: React.ReactNode;
-  asButton?: boolean;
 };
 
-function NavItem({ href, children, asButton }: NavItemProps) {
+type LinkNavItem = {
+  type: "link";
+  href: string;
+  children: React.ReactNode;
+};
+
+type NavItemProps = ButtonNavItem | LinkNavItem;
+
+function NavItem(props: NavItemProps) {
+  const { children, type } = props;
   const classes =
     "flex w-full gap-4 px-6 py-2 text-base font-bold hover:bg-background-100 focus:bg-background-100 active:bg-background-100";
 
-  return asButton || !href ? (
-    <button className={classes}>{children}</button>
-  ) : (
-    <Link href={href} className={classes}>
-      {children}
-    </Link>
-  );
+  switch (type) {
+    case "button":
+      return (
+        <button onClick={props.onClick} className={classes}>
+          {children}
+        </button>
+      );
+    case "link":
+      return (
+        <Link href={props.href} className={classes}>
+          {children}
+        </Link>
+      );
+  }
 }
 
 function IconWrapper({ children }: { children: React.ReactNode }) {

@@ -7,9 +7,13 @@ export function getThoughtsRoute() {
 }
 
 export function getLoginRoute() {
-  return "/api/auth/signin";
+  return "/signin";
 }
 
-export function getLogoutRoute() {
-  return "/api/auth/signout";
+export function getIsUnauthenticatedRoute(url: string) {
+  return url.includes(getLoginRoute());
+}
+
+export function getRevalidateRoute() {
+  return "/revalidate";
 }

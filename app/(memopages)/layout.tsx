@@ -5,10 +5,8 @@ import Link from "next/link";
 import { getTasksRoute, getThoughtsRoute } from "@/lib/routes";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/OldButton";
 import UserImage from "@/components/ui/UserImage";
-import { useUser } from "@/lib/hooks";
-import { getUsersName } from "@/lib/utils";
 
 const TASKS_PROMPT = "What do you want to accomplish?";
 const THOUGHTS_PROMPT = "What's on your mind today?";
@@ -19,7 +17,6 @@ type Props = {
 
 // TODO: Implement loading skeleton
 export default function PagesLayout({ children }: Props) {
-  const user = useUser();
   const pathname = usePathname();
   const tasksRoute = getTasksRoute();
   const thoughtsRoute = getThoughtsRoute();
@@ -33,7 +30,7 @@ export default function PagesLayout({ children }: Props) {
           <UserImage />
         </div>
 
-        <h2 className="mb-1 text-2xl font-bold">Hey, {getUsersName(user)}!</h2>
+        <h2 className="mb-1 text-2xl font-bold">Hey there!</h2>
 
         <p className="text-sm">
           {isTasksRoute ? TASKS_PROMPT : THOUGHTS_PROMPT}

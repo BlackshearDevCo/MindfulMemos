@@ -1,7 +1,12 @@
 import EmptyList from "@/components/EmptyList";
+import { createClient } from "@/lib/supabase/server";
 import React from "react";
 
 export default async function TasksPage() {
+  const supabase = createClient();
+  // const { data } = await supabase.from("todos").select();
+  const { data } = await supabase.auth.getUser();
+
   return <EmptyList />;
 }
 

@@ -8,11 +8,7 @@ export default function FormWrapper({
   children: React.ReactNode;
 }) {
   return (
-    <form
-      action={action}
-      method="post"
-      className="flex flex-col items-start gap-3"
-    >
+    <form action={action} className="flex flex-col items-start gap-3">
       {children}
     </form>
   );

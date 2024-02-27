@@ -6,6 +6,10 @@ export function getThoughtsRoute() {
   return "/thoughts";
 }
 
+export function getAccountRoute() {
+  return "/account";
+}
+
 export function getSignupRoute() {
   return "/signup";
 }

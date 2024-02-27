@@ -22,7 +22,6 @@ import { Button } from "@/components/ui/Button";
 
 export default function ForgotPasswordPage() {
   const [linkSent, setLinkSent] = useState(false);
-  const pathname = usePathname();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,7 +38,7 @@ export default function ForgotPasswordPage() {
         action={async (formData: FormData) => {
           const handleSignInWithErrors = handleForgotPassword.bind(
             null,
-            pathname,
+            window.location.origin,
             formData,
           );
 

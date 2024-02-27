@@ -1,5 +1,5 @@
 insert into
-public.todos (title)
+public.tasks (title)
 values
 ('Feed cats'),
 ('Wash dishes'),

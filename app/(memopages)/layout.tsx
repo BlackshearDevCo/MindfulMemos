@@ -5,13 +5,7 @@ import Link from "next/link";
 import { getTasksRoute, getThoughtsRoute } from "@/lib/routes";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import Button from "@/components/ui/OldButton";
-import UserImage from "@/components/ui/UserImage";
-import { getUsersFirstName } from "@/lib/utils";
-import { useUser } from "@/lib/hooks/client";
-
-const TASKS_PROMPT = "What do you want to accomplish?";
-const THOUGHTS_PROMPT = "What's on your mind today?";
+import NewTaskButton from "@/components/NewTaskButton";
 
 type Props = {
   children: React.ReactNode;
@@ -22,26 +16,9 @@ export default function PagesLayout({ children }: Props) {
   const pathname = usePathname();
   const tasksRoute = getTasksRoute();
   const thoughtsRoute = getThoughtsRoute();
-  const user = useUser();
-
-  const isTasksRoute = pathname === tasksRoute;
 
   return (
-    <main className="relative flex flex-1 flex-col gap-4 p-8 pt-4">
-      <section className="flex flex-col items-center">
-        <div className="mb-4">
-          <UserImage />
-        </div>
-
-        <h2 className="mb-1 text-2xl font-bold">
-          Hey {getUsersFirstName(user)}!
-        </h2>
-
-        <p className="text-sm">
-          {isTasksRoute ? TASKS_PROMPT : THOUGHTS_PROMPT}
-        </p>
-      </section>
-
+    <main className="relative flex flex-1 flex-col gap-4 pt-4">
       <nav className="relative flex gap-4 border-b-0">
         <Tab active={pathname === tasksRoute} href={tasksRoute}>
           Tasks
@@ -51,7 +28,7 @@ export default function PagesLayout({ children }: Props) {
         </Tab>
         <div
           className={clsx(
-            "h-full w-1/2 rounded-lg bg-primary-300 px-2 py-1.5",
+            "bg-popover-foreground h-full w-1/2 rounded-lg px-2 py-1.5",
             "absolute left-0 top-0 -z-10 transition-transform",
             pathname === thoughtsRoute ? "translate-x-full" : "",
           )}
@@ -60,9 +37,7 @@ export default function PagesLayout({ children }: Props) {
 
       <section className="flex-1">{children}</section>
 
-      <Button variant="primaryAccentGradient">
-        ADD NEW {isTasksRoute ? "TASK" : "THOUGHT"}
-      </Button>
+      <NewTaskButton />
     </main>
   );
 }
@@ -77,8 +52,8 @@ function Tab({ href, children, active }: TabProps) {
   return (
     <Link
       className={clsx(
-        "flex-1 rounded-lg px-2 py-1.5 text-center text-lg font-semibold",
-        active ? "text-text-900" : "text-text-800",
+        "flex-1 rounded-lg px-2 py-1.5 text-center text-lg font-semibold transition-colors",
+        active ? "text-background" : "",
       )}
       href={href}
     >

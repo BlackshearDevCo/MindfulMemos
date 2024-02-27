@@ -16,3 +16,30 @@ export function useUser() {
 
   return user;
 }
+
+type Theme = "light" | "dark";
+export const useTheme = (): [Theme, (theme: Theme) => void] => {
+  const isClient = typeof window !== "undefined";
+
+  const matchesDarkMode = isClient
+    ? window?.localStorage?.theme === "dark" ||
+      (!("theme" in window?.localStorage) &&
+        window?.matchMedia("(prefers-color-scheme: dark)").matches)
+    : false;
+
+  const [theme, setTheme] = useState<Theme>(matchesDarkMode ? "dark" : "light");
+
+  useEffect(() => {
+    if (!isClient) return;
+
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      window?.localStorage?.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      window?.localStorage?.setItem("theme", "light");
+    }
+  }, [theme, matchesDarkMode, isClient]);
+
+  return [theme, setTheme];
+};

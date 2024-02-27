@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { formSchema as signInFormSchema } from "@/app/(authpages)/signin/schema";
 import { formSchema as signUpFormSchema } from "@/app/(authpages)/signup/schema";
+import { formSchema as forgotPasswordFormSchema } from "@/app/(authpages)/forgotpassword/schema";
 
 export const handleSignIn = async (formData: FormData) => {
   const email = String(formData.get("email"));
@@ -72,4 +73,32 @@ export const handleSignUp = async (formData: FormData) => {
 
   revalidatePath(getTasksRoute());
   redirect(getTasksRoute());
+};
+
+export const handleForgotPassword = async (
+  pathname: string,
+  formData: FormData,
+) => {
+  const email = String(formData.get("email"));
+
+  const validationResponse = forgotPasswordFormSchema.safeParse({
+    email,
+  });
+
+  if (!validationResponse.success) {
+    const { errors } = validationResponse.error;
+
+    return {
+      errors: errors.map((error) => [error.path.join("."), error.message]),
+    };
+  }
+
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${pathname}/passwordreset`,
+  });
+
+  if (error) return { errors: [["root.serverError", error.message]] };
+  return { errors: [] };
 };

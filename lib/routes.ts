@@ -18,8 +18,21 @@ export function getLoginRoute() {
   return "/signin";
 }
 
+export function getForgotPasswordRoute() {
+  return "/forgotpassword";
+}
+
+export function getPasswordResetRoute() {
+  return "/passwordreset";
+}
+
 export function getIsUnauthenticatedRoute(url: string) {
-  return url.includes(getLoginRoute()) || url.includes(getSignupRoute());
+  return (
+    url.includes(getLoginRoute()) ||
+    url.includes(getSignupRoute()) ||
+    url.includes(getForgotPasswordRoute()) ||
+    url.includes(getPasswordResetRoute())
+  );
 }
 
 export function getRevalidateRoute() {

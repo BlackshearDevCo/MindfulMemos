@@ -17,7 +17,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "@/app/(authpages)/signin/schema";
-import { getSignupRoute } from "@/lib/routes";
+import { getForgotPasswordRoute, getSignupRoute } from "@/lib/routes";
 
 export default function SignInPage() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -93,7 +93,10 @@ export default function SignInPage() {
           </p>
         )}
 
-        <Link href="/" className="text-text-900/70 underline">
+        <Link
+          href={getForgotPasswordRoute()}
+          className="text-text-900/70 underline"
+        >
           Forgot password?
         </Link>
 

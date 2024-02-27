@@ -24,7 +24,7 @@ export default function AuthLayout({
   );
 }
 
-type Page = "signin" | "signup";
+type Page = "signin" | "signup" | "forgotpassword" | "passwordreset";
 
 type PageCopy = {
   title: string;
@@ -43,6 +43,18 @@ function getPageCopy(page?: Page): PageCopy {
       return {
         title: "Sign up",
         description: "Let's get your account created and logged in!",
+      };
+
+    case "forgotpassword":
+      return {
+        title: "Forgot password",
+        description: "Enter your email to receive a password reset link.",
+      };
+
+    case "passwordreset":
+      return {
+        title: "Reset password",
+        description: "Enter your new password and verify it to continue.",
       };
 
     default:

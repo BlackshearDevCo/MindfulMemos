@@ -53,7 +53,7 @@ export default function NewTaskButton() {
     formState: { errors },
   } = form;
 
-  const createTask = handleCreateTaskWithErrors.bind(null, user, toast);
+  const createTask = handleCreateTaskWithErrors.bind(null, user);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -71,7 +71,16 @@ export default function NewTaskButton() {
         <Form {...form}>
           <FormWrapper
             action={async (formData) => {
-              await createTask(formData);
+              const { errors } = await createTask(formData);
+              if (errors.length > 0) {
+                errors.forEach(([_, message]) => {
+                  toast({
+                    title: "Couldn't create task",
+                    description: message,
+                  });
+                });
+                return;
+              }
               setOpen(false);
             }}
           >

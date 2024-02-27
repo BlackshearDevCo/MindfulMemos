@@ -1,62 +1,73 @@
 "use client";
 
-import { Menu, Transition } from "@headlessui/react";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
 import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
+import { getAccountRoute, getLoginRoute } from "@/lib/routes";
+import Link from "next/link";
+import { useTheme } from "@/lib/hooks/client";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import UserImage from "@/components/ui/UserImage";
+import {
+  ArrowLeftStartOnRectangleIcon,
+  MoonIcon,
+  SunIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
 
 export default function HeaderDropdown() {
+  const router = useRouter();
+  const [theme, setTheme] = useTheme();
+
   return (
-    <Menu as={MenuContainer}>
-      <Menu.Button>
-        <PlusCircleIcon className="h-7 w-7" />
-      </Menu.Button>
-      <Transition
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
-      >
-        <Menu.Items className="absolute right-0 block w-min min-w-[200px] rounded-xl bg-background-50 py-3 shadow-lg ring-1 ring-gray-900/5">
-          <Menu.Item>
-            {({ active }) => <MenuItem active={active}>Add new task</MenuItem>}
-          </Menu.Item>
-          <Menu.Item>
-            {({ active }) => (
-              <MenuItem active={active}>Add new thought</MenuItem>
-            )}
-          </Menu.Item>
-          <Menu.Item>
-            {({ active }) => (
-              <MenuItem active={active}>Add new category</MenuItem>
-            )}
-          </Menu.Item>
-        </Menu.Items>
-      </Transition>
-    </Menu>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <UserImage />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent sideOffset={8} align="end">
+        <DropdownMenuItem className="flex gap-2 hover:cursor-pointer" asChild>
+          <Link href={getAccountRoute()}>
+            <IconWrapper>
+              <UserCircleIcon />
+            </IconWrapper>
+            <p>My account</p>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="flex gap-2 hover:cursor-pointer"
+          onClick={() => {
+            setTheme(theme === "dark" ? "light" : "dark");
+          }}
+        >
+          <IconWrapper>
+            {theme === "dark" ? <MoonIcon /> : <SunIcon />}
+          </IconWrapper>
+          <p>Change theme</p>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="flex gap-2 hover:cursor-pointer"
+          onClick={async () => {
+            const supabase = createClient();
+            await supabase.auth.signOut();
+            router.push(getLoginRoute());
+            router.refresh();
+          }}
+        >
+          <IconWrapper>
+            <ArrowLeftStartOnRectangleIcon />
+          </IconWrapper>
+          <p>Sign out</p>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
-function MenuContainer({ children }: { children: React.ReactNode }) {
-  return <div className="relative">{children}</div>;
-}
-
-type MenuItemProps = {
-  children: React.ReactNode;
-  active: boolean;
-};
-
-function MenuItem({ children, active }: MenuItemProps) {
-  return (
-    <button
-      className={clsx(
-        "w-full whitespace-nowrap px-3 py-1.5 text-left font-semibold transition-colors hover:bg-background-100 active:bg-background-100",
-        active ? "bg-background-100" : "",
-      )}
-    >
-      {children}
-    </button>
-  );
+function IconWrapper({ children }: { children: React.ReactNode }) {
+  return <div className="h-6 w-6">{children}</div>;
 }

@@ -18,7 +18,7 @@ export default function PagesLayout({ children }: Props) {
   const thoughtsRoute = getThoughtsRoute();
 
   return (
-    <main className="relative flex flex-1 flex-col gap-4 p-8 pt-4">
+    <main className="relative flex flex-1 flex-col gap-4 pt-4">
       <nav className="relative flex gap-4 border-b-0">
         <Tab active={pathname === tasksRoute} href={tasksRoute}>
           Tasks

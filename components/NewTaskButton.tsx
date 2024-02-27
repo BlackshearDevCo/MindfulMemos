@@ -55,7 +55,9 @@ export default function NewTaskButton() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>ADD NEW TASK</DialogTrigger>
+      <DialogTrigger asChild>
+        <Button variant="default">ADD NEW TASK</Button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader className="text-left">
           <DialogTitle>Create task</DialogTitle>

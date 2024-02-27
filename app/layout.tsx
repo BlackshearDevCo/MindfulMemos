@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import ThemeManager from "@/components/ThemeManager";
 import Header from "@/components/Header";
 import "@/app/globals.css";
 
@@ -28,8 +27,6 @@ export default function RootLayout({
 
           <div className="mt-16 flex flex-1">{children}</div>
         </div>
-
-        <ThemeManager />
       </body>
     </html>
   );

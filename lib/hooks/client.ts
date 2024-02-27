@@ -16,3 +16,24 @@ export function useUser() {
 
   return user;
 }
+
+type Theme = "light" | "dark";
+export const useTheme = (): [Theme, (theme: Theme) => void] => {
+  const matchesDarkMode =
+    window.localStorage.theme === "dark" ||
+    (!("theme" in window.localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const [theme, setTheme] = useState<Theme>(matchesDarkMode ? "dark" : "light");
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      window.localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      window.localStorage.setItem("theme", "light");
+    }
+  }, [theme, matchesDarkMode]);
+
+  return [theme, setTheme];
+};

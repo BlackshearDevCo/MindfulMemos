@@ -33,9 +33,11 @@ import { Textarea } from "@/components/ui/Textarea";
 import { newTaskFormSchema } from "@/components/formschemas";
 import { handleCreateTaskWithErrors } from "@/components/actions";
 import { useUser } from "@/lib/hooks/client";
+import { useToast } from "@/lib/hooks/useToast";
 
 export default function NewTaskButton() {
   const [open, setOpen] = React.useState(false);
+  const { toast } = useToast();
   const user = useUser();
   const form = useForm<z.infer<typeof newTaskFormSchema>>({
     resolver: zodResolver(newTaskFormSchema),
@@ -51,7 +53,7 @@ export default function NewTaskButton() {
     formState: { errors },
   } = form;
 
-  const createTask = handleCreateTaskWithErrors.bind(null, user);
+  const createTask = handleCreateTaskWithErrors.bind(null, user, toast);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

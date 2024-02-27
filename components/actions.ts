@@ -5,9 +5,11 @@ import { User } from "@supabase/supabase-js";
 import { newTaskFormSchema } from "@/components/formschemas";
 import { revalidatePath } from "next/cache";
 import { getTasksRoute } from "@/lib/routes";
+import { toast as toastType } from "@/lib/hooks/useToast";
 
 export const handleCreateTaskWithErrors = async (
   user: User | undefined,
+  toast: typeof toastType,
   formData: FormData,
 ) => {
   if (!user) throw new Error("Missing user");
@@ -36,8 +38,8 @@ export const handleCreateTaskWithErrors = async (
     user_id: user?.id,
   });
 
-  // TODO: add toast error message
-  if (error) return { errors: [["root.serverError", error.message]] };
+  if (error)
+    toast({ title: "Couldn't create task", description: error.message });
 
   revalidatePath(getTasksRoute());
 };

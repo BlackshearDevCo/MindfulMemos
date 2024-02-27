@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { getTasksRoute } from "@/lib/routes";
 import Link from "next/link";
 import HeaderDropdown from "@/components/HeaderDropdown";
+import { Toaster } from "@/components/ui/Toaster";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -29,11 +30,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${dmSans.className} text-foreground bg-background`}>
+      <body className={`${dmSans.className} bg-background text-foreground`}>
         <div className="flex h-screen w-full flex-col px-4 pb-6">
           <header
             className={clsx(
-              "fixed left-0 top-0 z-30 flex h-16 min-h-16 w-full flex-1 items-center bg-background-50 px-4",
+              "bg-background-50 fixed left-0 top-0 z-30 flex h-16 min-h-16 w-full flex-1 items-center px-4",
               isAuthenticated ? "justify-between" : "justify-center",
             )}
           >
@@ -45,6 +46,8 @@ export default async function RootLayout({
 
           <div className="mt-16 flex flex-1">{children}</div>
         </div>
+
+        <Toaster />
       </body>
     </html>
   );

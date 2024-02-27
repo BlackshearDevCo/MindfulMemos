@@ -98,7 +98,7 @@ export default function ForgotPasswordPage() {
           className="mt-10 w-full"
           disabled={linkSent}
         >
-          Sign In
+          Send link
         </Button>
       </form>
     </Form>

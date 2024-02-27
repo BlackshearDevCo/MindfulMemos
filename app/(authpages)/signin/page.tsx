@@ -46,7 +46,6 @@ export default function SignInPage() {
     <Form {...form}>
       <form
         action={handleSignInWithErrors}
-        method="post"
         className="flex flex-col items-start gap-3"
       >
         <FormField
@@ -101,7 +100,7 @@ export default function SignInPage() {
         </Link>
 
         <Button variant="default" type="submit" className="mt-10 w-full">
-          Sign In
+          Sign in
         </Button>
 
         <p className="w-full text-center">

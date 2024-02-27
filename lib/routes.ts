@@ -23,7 +23,7 @@ export function getForgotPasswordRoute() {
 }
 
 export function getPasswordResetRoute() {
-  return "/passwordreset";
+  return "/resetpassword";
 }
 
 export function getIsUnauthenticatedRoute(url: string) {

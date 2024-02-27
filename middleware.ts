@@ -3,7 +3,11 @@ import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
 import type { Database } from "@/lib/database.types";
-import { getIsUnauthenticatedRoute, getLoginRoute } from "@/lib/routes";
+import {
+  getIsUnauthenticatedRoute,
+  getLoginRoute,
+  getPasswordResetRoute,
+} from "@/lib/routes";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -14,6 +18,10 @@ export async function middleware(req: NextRequest) {
   const unauthenticatedRoute = getIsUnauthenticatedRoute(req.url);
 
   if (!data.session?.user && !unauthenticatedRoute)
+    return NextResponse.redirect(new URL(getLoginRoute(), req.url));
+
+  // Simple check for if the password reset code exists. Not extensive for checking if code is valid
+  if (req.url.includes(getPasswordResetRoute()) && !req.url.includes("?code="))
     return NextResponse.redirect(new URL(getLoginRoute(), req.url));
 
   return res;

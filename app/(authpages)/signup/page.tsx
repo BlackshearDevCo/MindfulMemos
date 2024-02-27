@@ -121,7 +121,7 @@ export default function SignUpPage() {
         )}
 
         <Button variant="default" type="submit" className="mt-10 w-full">
-          Sign In
+          Sign up
         </Button>
 
         <p className="w-full text-center">

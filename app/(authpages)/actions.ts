@@ -1,6 +1,6 @@
 "use server";
 
-import { getTasksRoute } from "@/lib/routes";
+import { getPasswordResetRoute, getTasksRoute } from "@/lib/routes";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -97,7 +97,7 @@ export const handleForgotPassword = async (
   const supabase = createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${pathname}/passwordreset`,
+    redirectTo: `${pathname}${getPasswordResetRoute()}`,
   });
 
   if (error) return { errors: [["root.serverError", error.message]] };
@@ -123,8 +123,15 @@ export const handlePasswordReset = async (code: string, formData: FormData) => {
 
   const supabase = createClient();
 
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const { error: updateError } = await supabase.auth.updateUser({
+    password: newPassword,
+  });
+  if (updateError)
+    return { errors: [["root.serverError", updateError.message]] };
 
-  if (error) return { errors: [["root.serverError", error.message]] };
+  const { error: sessionError } =
+    await supabase.auth.exchangeCodeForSession(code);
+  if (sessionError)
+    return { errors: [["root.serverError", sessionError.message]] };
   return { errors: [] };
 };

@@ -8,20 +8,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/Form";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "@/app/(authpages)/resetpassword/schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { handlePasswordReset } from "../actions";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { getLoginRoute } from "@/lib/routes";
+import { createClient } from "@/lib/supabase/client";
 
 export default function ResetPasswordPage() {
+  const supabase = createClient();
   const params = useSearchParams();
-  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,12 +33,15 @@ export default function ResetPasswordPage() {
     formState: { errors },
   } = form;
 
-  const code = params.get("code");
+  useEffect(() => {
+    const refreshSession = async (code: string) => {
+      await supabase.auth.exchangeCodeForSession(code);
+    };
 
-  if (!code) {
-    router.replace(getLoginRoute());
-    return;
-  }
+    const queryCode = params.get("code");
+    if (queryCode) refreshSession(queryCode);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Form {...form}>
@@ -47,7 +50,6 @@ export default function ResetPasswordPage() {
           form.clearErrors();
           const handlePasswordResetErrors = handlePasswordReset.bind(
             null,
-            code,
             formData,
           );
 

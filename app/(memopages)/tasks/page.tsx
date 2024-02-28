@@ -1,22 +1,52 @@
 import EmptyList from "@/components/EmptyList";
-import { Tables } from "@/lib/database.types";
+import TaskCategory from "@/components/TaskCategory";
 import { createClient } from "@/lib/supabase/server";
+import { Category, Task } from "@/lib/types";
 import React from "react";
 
 export default async function TasksPage() {
   const supabase = createClient();
-  const { data: tasks } = await supabase.from("tasks").select();
+  const { data: tasks } = await supabase
+    .from("tasks")
+    .select()
+    .order("completed", { ascending: true }) // temp until custom sorting implementation
+    .returns<Task[]>();
+  const { data: categories } = await supabase
+    .from("categories")
+    .select()
+    .order("id", { ascending: true }) // temp until custom sorting implementation
+    .returns<Category[]>();
 
-  // return <EmptyList />;
+  const uncategorizedTasks = getUncategorizedTasks();
+
+  if (!tasks) return <EmptyList />;
 
   return (
-    <ul className="flex flex-col gap-2">
-      {tasks?.map((task: Tables<"tasks">) => (
-        <li key={task.id}>
-          <p className="text-lg">{task.name}</p>
-          {task.description && <p className="text-sm">{task.description}</p>}
-        </li>
-      ))}
-    </ul>
+    <div className="flex flex-col gap-4">
+      {categories?.map((category) => {
+        const filteredTasks = filterTasksByCategory(category.id);
+        return (
+          <TaskCategory
+            key={category.id}
+            categoryName={category.name}
+            tasks={filteredTasks ?? []}
+          />
+        );
+      })}
+      {!!uncategorizedTasks?.length && (
+        <TaskCategory
+          categoryName="Uncategorized"
+          tasks={uncategorizedTasks ?? []}
+        />
+      )}
+    </div>
   );
+
+  function filterTasksByCategory(categoryId: Category["id"]) {
+    return tasks?.filter((task) => task.category_id === categoryId);
+  }
+
+  function getUncategorizedTasks() {
+    return tasks?.filter((task) => !task.category_id);
+  }
 }

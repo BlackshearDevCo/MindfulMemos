@@ -1,21 +1,7 @@
-// TODO (lol): Update with DB structure
-export type Todo = {
-  id: number;
-  created_at: string;
-  title: string;
-  description?: string;
-  complete_by?: string;
-  completed: boolean;
-  user_id: string;
-  category_id: string;
-  category?: Category;
-};
+import { Tables } from "@/lib/database.types";
 
-// TODO: Update with DB structure
-export type Category = {
-  id: number;
-  created_at: string;
-  name: string;
-  order: number;
-  user_id: string;
-};
+export type Task = Tables<"tasks">;
+
+export type Category = Tables<"categories">;
+
+export type Thought = Tables<"thoughts">;

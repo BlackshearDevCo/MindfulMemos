@@ -65,6 +65,7 @@ export type Database = {
           completed: boolean;
           created_at: string;
           description: string | null;
+          favorite: boolean;
           id: number;
           name: string;
           user_id: string | null;
@@ -75,6 +76,7 @@ export type Database = {
           completed?: boolean;
           created_at?: string;
           description?: string | null;
+          favorite?: boolean;
           id?: number;
           name: string;
           user_id?: string | null;
@@ -85,6 +87,7 @@ export type Database = {
           completed?: boolean;
           created_at?: string;
           description?: string | null;
+          favorite?: boolean;
           id?: number;
           name?: string;
           user_id?: string | null;

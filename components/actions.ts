@@ -2,9 +2,9 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { User } from "@supabase/supabase-js";
-import { newTaskFormSchema } from "@/components/formschemas";
 import { revalidatePath } from "next/cache";
 import { getTasksRoute } from "@/lib/routes";
+import { taskFormSchema } from "@/app/(memopages)/tasks/schema";
 
 export const handleCreateTaskWithErrors = async (
   user: User | undefined,
@@ -15,7 +15,7 @@ export const handleCreateTaskWithErrors = async (
   const name = String(formData.get("name"));
   const description = formData.get("description");
 
-  const validationResponse = newTaskFormSchema.safeParse({
+  const validationResponse = taskFormSchema.safeParse({
     name,
     description: description ?? undefined,
   });

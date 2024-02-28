@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const newTaskFormSchema = z.object({
+export const taskFormSchema = z.object({
   name: z.string().max(50, "Must be 50 or fewer characters long"),
   description: z.string().optional(),
   category_id: z.number().optional(),

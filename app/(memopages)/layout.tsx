@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getTasksRoute, getThoughtsRoute } from "@/lib/routes";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import NewTaskButton from "@/components/NewTaskButton";
+import { NewItemButton } from "@/app/(memopages)/NewItemButton";
 
 type Props = {
   children: React.ReactNode;
@@ -28,7 +28,7 @@ export default function PagesLayout({ children }: Props) {
         </Tab>
         <div
           className={clsx(
-            "bg-popover-foreground h-full w-1/2 rounded-lg px-2 py-1.5",
+            "h-full w-1/2 rounded-lg bg-popover-foreground px-2 py-1.5",
             "absolute left-0 top-0 -z-10 transition-transform",
             pathname === thoughtsRoute ? "translate-x-full" : "",
           )}
@@ -37,7 +37,7 @@ export default function PagesLayout({ children }: Props) {
 
       <section className="flex-1">{children}</section>
 
-      <NewTaskButton />
+      <NewItemButton itemType={pathname === tasksRoute ? "task" : "thought"} />
     </main>
   );
 }

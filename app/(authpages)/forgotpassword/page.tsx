@@ -36,6 +36,8 @@ export default function ForgotPasswordPage() {
     <Form {...form}>
       <form
         action={async (formData: FormData) => {
+          setLinkSent(true);
+
           const handleSignInWithErrors = handleForgotPassword.bind(
             null,
             window.location.origin,
@@ -44,14 +46,12 @@ export default function ForgotPasswordPage() {
 
           const { errors } = await handleSignInWithErrors();
 
-          if (errors.length > 0)
-            errors.map(([key, value]) => {
-              form.setError(key as any, {
-                message: value,
-              });
+          if (errors.length > 0) setLinkSent(false);
+          errors.forEach(([key, value]) => {
+            form.setError(key as any, {
+              message: value,
             });
-
-          if (!errors.length) setLinkSent(true);
+          });
         }}
         className="flex flex-col items-start gap-3"
       >

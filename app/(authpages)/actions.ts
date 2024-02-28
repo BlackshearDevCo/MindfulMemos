@@ -123,15 +123,16 @@ export const handlePasswordReset = async (code: string, formData: FormData) => {
 
   const supabase = createClient();
 
+  const { error: sessionError } =
+    await supabase.auth.exchangeCodeForSession(code);
+  if (sessionError)
+    return { errors: [["root.serverError", sessionError.message]] };
+
   const { error: updateError } = await supabase.auth.updateUser({
     password: newPassword,
   });
   if (updateError)
     return { errors: [["root.serverError", updateError.message]] };
 
-  const { error: sessionError } =
-    await supabase.auth.exchangeCodeForSession(code);
-  if (sessionError)
-    return { errors: [["root.serverError", sessionError.message]] };
-  return { errors: [] };
+  redirect(getTasksRoute());
 };

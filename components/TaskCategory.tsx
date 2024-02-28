@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/Collapsible";
 import { Category, Task } from "@/lib/types";
-import { Checkbox } from "./ui/checkbox";
-import { Label } from "./ui/Label";
+import { Checkbox } from "@/components/ui/Checkbox";
+import { Label } from "@/components/ui/Label";
 import {
   ChevronDoubleDownIcon,
   ChevronDoubleUpIcon,

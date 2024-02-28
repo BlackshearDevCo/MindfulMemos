@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { formSchema } from "@/app/(authpages)/resetpassword/schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { handlePasswordReset } from "../actions";
+import { handlePasswordReset } from "@/app/(authpages)/actions";
 import { useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";

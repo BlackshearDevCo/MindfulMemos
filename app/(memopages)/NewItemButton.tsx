@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/Dialog";
 import { Button } from "@/components/ui/Button";
-import TaskForm from "./tasks/TaskForm";
+import TaskForm from "@/app/(memopages)/tasks/TaskForm";
 
 type Props = {
   itemType: "task" | "thought";

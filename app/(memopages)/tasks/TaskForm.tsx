@@ -118,6 +118,13 @@ export default function TaskForm({ onSubmit, task }: Props) {
                   </FormItem>
                 )}
               />
+              {/* Category */}
+
+              {/* Completed */}
+
+              {/* Favorite */}
+
+              {/* Complete By */}
             </AccordionContent>
           </AccordionItem>
         </Accordion>

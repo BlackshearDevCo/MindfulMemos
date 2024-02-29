@@ -9,7 +9,7 @@ export default async function TasksPage() {
   const { data: tasks } = await supabase
     .from("tasks")
     .select()
-    .order("completed", { ascending: true }) // temp until custom sorting implementation
+    .order("favorite", { ascending: false }) // temp until custom sorting implementation
     .returns<Task[]>();
   const { data: categories } = await supabase
     .from("categories")

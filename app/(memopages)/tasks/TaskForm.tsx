@@ -28,6 +28,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { taskFormSchema } from "@/app/(memopages)/tasks/schema";
 import { Task } from "@/lib/types";
+import { useFormStatus } from "react-dom";
 
 type Props = {
   onSubmit?: () => void;
@@ -127,14 +128,23 @@ export default function TaskForm({ onSubmit, task }: Props) {
           </p>
         )}
 
-        <Button
-          variant="default"
-          type="submit"
-          className="mt-10 w-full uppercase"
-        >
-          {actionType} task
-        </Button>
+        <SubmitButton actionType={actionType} />
       </FormWrapper>
     </Form>
+  );
+}
+
+function SubmitButton({ actionType }: { actionType: "edit" | "create" }) {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      variant="default"
+      type="submit"
+      className="mt-10 w-full uppercase"
+      disabled={pending}
+    >
+      {actionType} task
+    </Button>
   );
 }

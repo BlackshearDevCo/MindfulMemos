@@ -17,22 +17,24 @@ export default async function TasksPage() {
     .order("id", { ascending: true }) // temp until custom sorting implementation
     .returns<Category[]>();
 
-  const uncategorizedTasks = getUncategorizedTasks();
+  if (tasks?.length === 0) return <EmptyList />;
 
-  if (!tasks) return <EmptyList />;
+  const uncategorizedTasks = getUncategorizedTasks();
 
   return (
     <div className="flex flex-col gap-4">
-      {categories?.map((category) => {
-        const filteredTasks = filterTasksByCategory(category.id);
-        return (
-          <TaskCategory
-            key={category.id}
-            categoryName={category.name}
-            tasks={filteredTasks ?? []}
-          />
-        );
-      })}
+      {categories
+        ?.filter((category) => filterTasksByCategory(category.id).length > 0)
+        ?.map((category) => {
+          const filteredTasks = filterTasksByCategory(category.id);
+          return (
+            <TaskCategory
+              key={category.id}
+              categoryName={category.name}
+              tasks={filteredTasks ?? []}
+            />
+          );
+        })}
       {!!uncategorizedTasks?.length && (
         <TaskCategory
           categoryName="Uncategorized"
@@ -42,11 +44,11 @@ export default async function TasksPage() {
     </div>
   );
 
-  function filterTasksByCategory(categoryId: Category["id"]) {
-    return tasks?.filter((task) => task.category_id === categoryId);
+  function filterTasksByCategory(categoryId: Category["id"]): Task[] {
+    return tasks?.filter((task) => task.category_id === categoryId) ?? [];
   }
 
-  function getUncategorizedTasks() {
-    return tasks?.filter((task) => !task.category_id);
+  function getUncategorizedTasks(): Task[] {
+    return tasks?.filter((task) => !task.category_id) ?? [];
   }
 }

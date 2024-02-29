@@ -52,7 +52,7 @@ function Tab({ href, children, active }: TabProps) {
   return (
     <Link
       className={clsx(
-        "flex-1 rounded-lg px-2 py-1.5 text-center text-lg font-semibold transition-colors",
+        "flex-1 rounded-lg px-2 py-2 text-center text-xl font-semibold transition-colors",
         active ? "text-background" : "",
       )}
       href={href}

@@ -34,7 +34,7 @@ export default async function RootLayout({
         <div className="flex h-dvh w-full flex-col px-4 pb-6">
           <header
             className={clsx(
-              "bg-background-50 fixed left-0 top-0 z-30 flex h-16 min-h-16 w-full flex-1 items-center px-4",
+              "bg-background-50 fixed left-0 top-0 z-30 flex h-16 min-h-16 w-full flex-1 items-center px-4 text-lg",
               isAuthenticated ? "justify-between" : "justify-center",
             )}
           >

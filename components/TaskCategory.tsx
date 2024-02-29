@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/DropdownMenu";
 import { toast } from "@/lib/hooks/useToast";
 import FormDialog from "@/app/(memopages)/tasks/FormDialog";
+import { cn } from "@/lib/utils";
 
 type Props = {
   categoryName: Category["name"];
@@ -93,28 +94,32 @@ function TaskItem({
       <div className="flex items-center space-x-2">
         <Checkbox
           id={`task_${task.id}`}
-          className="h-5 w-5 rounded-full"
+          className="h-6 w-6 rounded-full"
           checked={taskCompleted}
           onCheckedChange={handleCompleted}
         />
-        <Label htmlFor={`task_${task.id}`} className="text-base">
+        <Label htmlFor={`task_${task.id}`} className="text-xl">
           {task.name}
         </Label>
       </div>
 
       <div className="flex">
-        <button className="px-2" onClick={handleFavorite}>
+        <button className="px-1" onClick={handleFavorite}>
           {favorite ? (
-            <HeartIconSolid className="h-4" />
+            <HeartIconSolid
+              className={cn("h-6", favorite ? "text-destructive" : "")}
+            />
           ) : (
-            <HeartIconOutline className="h-4" />
+            <HeartIconOutline
+              className={cn("h-6", favorite ? "text-destructive" : "")}
+            />
           )}
         </button>
 
         <DropdownMenu key={taskEditedKey}>
           <DropdownMenuTrigger asChild>
-            <button className="px-2">
-              <EllipsisHorizontalIcon className="h-4" />
+            <button className="px-1">
+              <EllipsisHorizontalIcon className="h-6" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent sideOffset={8} align="end">
@@ -126,14 +131,14 @@ function TaskItem({
               onSubmit={() => setTaskEditedKey(Date.now())}
             >
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                <DropdownMenuItemIconWrapper className="h-4 w-4">
+                <DropdownMenuItemIconWrapper className="h-5 w-5">
                   <PencilIcon />
                 </DropdownMenuItemIconWrapper>
                 <p>Edit task</p>
               </DropdownMenuItem>
             </FormDialog>
             <DropdownMenuItem onClick={handleCompleted}>
-              <DropdownMenuItemIconWrapper className="h-4 w-4">
+              <DropdownMenuItemIconWrapper className="h-5 w-5">
                 {taskCompleted ? (
                   <CheckCircleIconSolid />
                 ) : (
@@ -143,7 +148,9 @@ function TaskItem({
               <p>Mark as completed</p>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleFavorite}>
-              <DropdownMenuItemIconWrapper className="h-4 w-4">
+              <DropdownMenuItemIconWrapper
+                className={cn("h-5 w-5", favorite ? "text-destructive" : "")}
+              >
                 {favorite ? <HeartIconSolid /> : <HeartIconOutline />}
               </DropdownMenuItemIconWrapper>
               <p>Mark as favorite</p>
@@ -152,7 +159,7 @@ function TaskItem({
               className="text-destructive"
               onClick={handleDelete}
             >
-              <DropdownMenuItemIconWrapper className="h-4 w-4">
+              <DropdownMenuItemIconWrapper className="h-5 w-5">
                 <TrashIcon />
               </DropdownMenuItemIconWrapper>
               <p>Delete task</p>

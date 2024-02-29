@@ -35,6 +35,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import { toast } from "@/lib/hooks/useToast";
+import FormDialog from "@/app/(memopages)/tasks/FormDialog";
 
 type Props = {
   categoryName: Category["name"];
@@ -78,6 +79,8 @@ function TaskItem({
   task: Task;
   onDelete: (id: Task["id"]) => void;
 }) {
+  // NOTE: This key is used to update the `DropdownMenu` key prop when the form is submitted, which will trigger the menu to close
+  const [taskEditedKey, setTaskEditedKey] = useState(Date.now());
   const [taskCompleted, setTaskCompleted] = useState<Task["completed"]>(
     task.completed,
   );
@@ -108,19 +111,27 @@ function TaskItem({
           )}
         </button>
 
-        <DropdownMenu>
+        <DropdownMenu key={taskEditedKey}>
           <DropdownMenuTrigger asChild>
             <button className="px-2">
               <EllipsisHorizontalIcon className="h-4" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent sideOffset={8} align="end">
-            <DropdownMenuItem>
-              <DropdownMenuItemIconWrapper className="h-4 w-4">
-                <PencilIcon />
-              </DropdownMenuItemIconWrapper>
-              <p>Edit task</p>
-            </DropdownMenuItem>
+            <FormDialog
+              itemType="task"
+              title={`Edit task`}
+              description={`Edit the details of your task below.`}
+              item={task}
+              onSubmit={() => setTaskEditedKey(Date.now())}
+            >
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <DropdownMenuItemIconWrapper className="h-4 w-4">
+                  <PencilIcon />
+                </DropdownMenuItemIconWrapper>
+                <p>Edit task</p>
+              </DropdownMenuItem>
+            </FormDialog>
             <DropdownMenuItem onClick={handleCompleted}>
               <DropdownMenuItemIconWrapper className="h-4 w-4">
                 {taskCompleted ? (

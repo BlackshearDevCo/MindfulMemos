@@ -31,7 +31,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.className} bg-background text-foreground`}>
-        <div className="flex h-screen w-full flex-col px-4 pb-6">
+        <div className="flex h-dvh w-full flex-col px-4 pb-6">
           <header
             className={clsx(
               "bg-background-50 fixed left-0 top-0 z-30 flex h-16 min-h-16 w-full flex-1 items-center px-4",

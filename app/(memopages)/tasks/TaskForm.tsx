@@ -1,5 +1,8 @@
 import FormWrapper from "@/components/FormWrapper";
-import { handleCreateTaskWithErrors } from "@/components/actions";
+import {
+  handleCreateTaskWithErrors,
+  handleEditTaskWithErrors,
+} from "@/components/actions";
 import {
   Accordion,
   AccordionContent,
@@ -24,39 +27,47 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { taskFormSchema } from "@/app/(memopages)/tasks/schema";
+import { Task } from "@/lib/types";
 
 type Props = {
   onSubmit?: () => void;
+  task?: Task;
 };
 
-export default function TaskForm({ onSubmit }: Props) {
+export default function TaskForm({ onSubmit, task }: Props) {
   const { toast } = useToast();
   const user = useUser();
   const form = useForm<z.infer<typeof taskFormSchema>>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
-      name: "",
-      description: undefined,
-      category_id: undefined,
-      completed: false,
-      complete_by: "",
+      name: task?.name ?? "",
+      description: task?.description ?? undefined,
+      category_id: task?.category_id ?? undefined,
+      completed: task?.completed ?? false,
+      favorite: task?.favorite ?? false,
+      complete_by: task?.complete_by ?? "",
     },
   });
   const {
     formState: { errors },
   } = form;
 
-  const createTask = handleCreateTaskWithErrors.bind(null, user);
+  const isEditing = !!task;
+  const actionType = isEditing ? "edit" : "create";
+
+  const taskAction = isEditing
+    ? handleEditTaskWithErrors.bind(null, task.id)
+    : handleCreateTaskWithErrors.bind(null, user);
 
   return (
     <Form {...form}>
       <FormWrapper
         action={async (formData) => {
-          const { errors } = await createTask(formData);
+          const { errors } = await taskAction(formData);
           if (errors.length > 0) {
             errors.forEach(([_, message]) => {
               toast({
-                title: "Couldn't create task",
+                title: `Couldn't ${actionType} task`,
                 description: message,
               });
             });
@@ -116,8 +127,12 @@ export default function TaskForm({ onSubmit }: Props) {
           </p>
         )}
 
-        <Button variant="default" type="submit" className="mt-10 w-full">
-          Create task
+        <Button
+          variant="default"
+          type="submit"
+          className="mt-10 w-full uppercase"
+        >
+          {actionType} task
         </Button>
       </FormWrapper>
     </Form>

@@ -5,6 +5,7 @@ export const taskFormSchema = z.object({
   description: z.string().optional(),
   category_id: z.number().optional(),
   completed: z.boolean().optional(),
+  favorite: z.boolean().optional(),
   complete_by: z
     .string()
     .refine(

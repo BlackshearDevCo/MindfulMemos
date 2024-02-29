@@ -15,8 +15,8 @@ export function NewItemButton({ itemType }: Props) {
       title={`Create ${itemType}`}
       description={`Enter the details of your new ${itemType} below.`}
     >
-      <Button variant="default" className="uppercase">
-        Add new {itemType}
+      <Button variant="default" size="xl" className="text-xl">
+        Add {itemType}
       </Button>
     </FormDialog>
   );

@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuItemIconWrapper,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import { getAccountRoute, getLoginRoute } from "@/lib/routes";
@@ -29,28 +30,26 @@ export default function HeaderDropdown() {
       <DropdownMenuTrigger>
         <UserImage />
       </DropdownMenuTrigger>
-      <DropdownMenuContent sideOffset={8} align="end">
-        <DropdownMenuItem className="flex gap-2 hover:cursor-pointer" asChild>
+      <DropdownMenuContent>
+        <DropdownMenuItem asChild>
           <Link href={getAccountRoute()}>
-            <IconWrapper>
+            <DropdownMenuItemIconWrapper>
               <UserCircleIcon />
-            </IconWrapper>
+            </DropdownMenuItemIconWrapper>
             <p>My account</p>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="flex gap-2 hover:cursor-pointer"
           onClick={() => {
             setTheme(theme === "dark" ? "light" : "dark");
           }}
         >
-          <IconWrapper>
+          <DropdownMenuItemIconWrapper>
             {theme === "dark" ? <MoonIcon /> : <SunIcon />}
-          </IconWrapper>
+          </DropdownMenuItemIconWrapper>
           <p>Change theme</p>
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="flex gap-2 hover:cursor-pointer"
           onClick={async () => {
             const supabase = createClient();
             await supabase.auth.signOut();
@@ -58,16 +57,12 @@ export default function HeaderDropdown() {
             router.refresh();
           }}
         >
-          <IconWrapper>
+          <DropdownMenuItemIconWrapper>
             <ArrowLeftStartOnRectangleIcon />
-          </IconWrapper>
+          </DropdownMenuItemIconWrapper>
           <p>Sign out</p>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-function IconWrapper({ children }: { children: React.ReactNode }) {
-  return <div className="h-6 w-6">{children}</div>;
 }

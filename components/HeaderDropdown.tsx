@@ -8,7 +8,7 @@ import {
   DropdownMenuItemIconWrapper,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-import { getAccountRoute, getLoginRoute } from "@/lib/routes";
+import { getAccountRoute, getLoginRoute, getLogoutRoute } from "@/lib/routes";
 import Link from "next/link";
 import { useTheme } from "@/lib/hooks/client";
 import { createClient } from "@/lib/supabase/client";
@@ -20,6 +20,7 @@ import {
   SunIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
+import { revalidatePath } from "next/cache";
 
 export default function HeaderDropdown() {
   const router = useRouter();
@@ -49,18 +50,16 @@ export default function HeaderDropdown() {
           </DropdownMenuItemIconWrapper>
           <p>Change theme</p>
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={async () => {
-            const supabase = createClient();
-            await supabase.auth.signOut();
-            router.push(getLoginRoute());
-            router.refresh();
-          }}
-        >
-          <DropdownMenuItemIconWrapper>
-            <ArrowLeftStartOnRectangleIcon />
-          </DropdownMenuItemIconWrapper>
-          <p>Sign out</p>
+        <DropdownMenuItem asChild>
+          <Link
+            href={getLogoutRoute()}
+            onClick={() => revalidatePath("/", "layout")}
+          >
+            <DropdownMenuItemIconWrapper>
+              <ArrowLeftStartOnRectangleIcon />
+            </DropdownMenuItemIconWrapper>
+            <p>Sign out</p>
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

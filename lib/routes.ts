@@ -18,6 +18,10 @@ export function getLoginRoute() {
   return "/signin";
 }
 
+export function getLogoutRoute() {
+  return "/logout";
+}
+
 export function getForgotPasswordRoute() {
   return "/forgotpassword";
 }

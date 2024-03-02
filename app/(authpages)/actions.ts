@@ -36,18 +36,6 @@ export const handleSignIn = async (formData: FormData) => {
   redirect(getTasksRoute());
 };
 
-export const handleSignInWithGoogle = async () => {
-  const supabase = createClient();
-
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-  });
-
-  if (error) return { errors: [["root.serverError", error.message]] };
-
-  redirect(data.url ?? "");
-};
-
 export const handleSignUp = async (formData: FormData) => {
   const firstName = String(formData.get("firstName"));
   const lastName = String(formData.get("lastName"));
